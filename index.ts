@@ -8,7 +8,7 @@ app.get('/', (req: Request, res: Response) => {
 
   const date = new Date().toISOString()
 
-  res.send(`Welcome!!!! tiny ${date}`)
+  res.send(`Welcome!!!! ${date}`)
 
 })
 
