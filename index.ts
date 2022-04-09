@@ -40,9 +40,10 @@ redisClient.connect().then(() => {
 })
 
 process.on('SIGTERM', async () => {
+  // console.log(`[sigterm received]`)
+  // await redisClient.disconnect()
+  // console.log(`[disconnected from redis!]`)
+  // server.close()
+  // console.log(`[disconnected from express server as well]`)
   console.log(`[sigterm received]`)
-  await redisClient.disconnect()
-  console.log(`[disconnected from redis!]`)
-  server.close()
-  console.log(`[disconnected from express server as well]`)
 })
