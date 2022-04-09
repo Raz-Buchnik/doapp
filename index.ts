@@ -10,6 +10,9 @@ app.get('/', (req: Request, res: Response) => {
 
   console.log(req.headers)
 
+  console.log(`[process.env.global]:`, process.env.global)
+  console.log(`[process.env.foo]:`, process.env.foo)
+
   res.send(`Welcome!!!! ${date}`)
 
 })
