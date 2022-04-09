@@ -28,8 +28,6 @@ redisClient.connect().then(() => {
     console.log(`[process.env.foo]:`, process.env.foo)
   
     res.send(`Welcome!!! ${date}, ${process.env.TZ}, this is from redis: foo = ${foo}`)
-
-    await redisClient.disconnect()
   
   })
   
@@ -48,4 +46,8 @@ process.on('SIGTERM', async () => {
   // server.close()
   // console.log(`[disconnected from express server as well]`)
   console.log(`[sigterm received]`)
+})
+
+process.on('SIGINT', () => {
+  console.log(`[sigint received]`)
 })
