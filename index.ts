@@ -25,7 +25,7 @@ redisClient.connect().then(() => {
   
     const foo = await redisClient.get('foo')
   
-    res.send(`Welcome!!!! ${date}, ${process.env.TZ}, this is from redis: foo = ${foo}`)
+    res.send(`Welcome!!! ${date}, ${process.env.TZ}, this is from redis: foo = ${foo}`)
   
   })
   
