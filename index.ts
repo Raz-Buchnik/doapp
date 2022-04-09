@@ -3,7 +3,7 @@ import { Server } from 'http'
 import { createClient } from 'redis'
 
 const redisClient = createClient({
-  url: process.env.DATABASE_URL
+  url: process.env.redisConnectionString
 })
 redisClient.on('error', err => {
   console.log(`[Redis Error]:`, err)
@@ -25,8 +25,6 @@ redisClient.connect().then(() => {
   
     const foo = await redisClient.get('foo')
   
-    console.log(`[process.env.DATABASE_URL]:`, process.env.DATABASE_URL)
-
     res.send(`Welcome!!! ${date}, ${process.env.TZ}, this is from redis: foo = ${foo}`)
   
   })
