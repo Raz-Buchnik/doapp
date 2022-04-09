@@ -8,6 +8,8 @@ app.get('/', (req: Request, res: Response) => {
 
   const date = new Date().toISOString()
 
+  console.log(req.headers)
+
   res.send(`Welcome!!!! ${date}`)
 
 })
