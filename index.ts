@@ -29,7 +29,7 @@ redisClient.connect().then(() => {
   
     res.send(`Welcome!!! ${date}, ${process.env.TZ}, this is from redis: foo = ${foo}`)
 
-    await redisClient.quit()
+    await redisClient.disconnect()
   
   })
   
