@@ -1,4 +1,5 @@
-import express, { Request, Response } from 'express'
+import express, { Application, Request, Response } from 'express'
+import { Server } from 'http'
 import { createClient } from 'redis'
 
 const redisClient = createClient({
@@ -7,25 +8,39 @@ const redisClient = createClient({
 redisClient.on('error', err => {
   console.log(`[Redis Error]:`, err)
 })
+let app: Application
+let server: Server
 
-const app = express()
+redisClient.connect().then(() => {
 
-const port: number = 3008
+  app = express()
 
-app.get('/', async (req: Request, res: Response) => {
+  const port: number = 3008
+  
+  app.get('/', async (req: Request, res: Response) => {
+  
+    const date = new Date().toISOString()
+  
+    await redisClient.set('foo', 'bar')
+  
+    const foo = await redisClient.get('foo')
+  
+    res.send(`Welcome!!!! ${date}, ${process.env.TZ}, this is from redis: foo = ${foo}`)
+  
+  })
+  
+  server = app.listen(port, () => {
+    console.log(`[listen on port ${port}]`)
+  })
 
-  const date = new Date().toISOString()
-
-  await redisClient.connect()
-
-  await redisClient.set('foo', 'bar')
-
-  const foo = await redisClient.get('foo')
-
-  res.send(`Welcome!!!! ${date}, ${process.env.TZ}, this is from redis: foo = ${foo}`)
-
+}).catch(err => {
+  console.log(`[couldnt connect to redis err]`, err)
 })
 
-app.listen(port, () => {
-  console.log(`[listen on port ${port}]`)
+process.on('SIGTERM', async () => {
+  console.log(`[sigterm received]`)
+  await redisClient.disconnect()
+  console.log(`[disconnected from redis!]`)
+  server.close()
+  console.log(`[disconnected from express server as well]`)
 })
