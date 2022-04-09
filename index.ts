@@ -2,9 +2,7 @@ import express, { Application, Request, Response } from 'express'
 import { Server } from 'http'
 import { createClient } from 'redis'
 
-const redisClient = createClient({
-  url: process.env.redisConnectionString
-})
+const redisClient = createClient()
 redisClient.on('error', err => {
   console.log(`[Redis Error]:`, err)
 })
