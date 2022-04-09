@@ -9,6 +9,7 @@ app.get('/', (req: Request, res: Response) => {
   const date = new Date().toISOString()
 
   console.log(req.headers)
+  console.log(req.ip)
 
   console.log(`[process.env.global]:`, process.env.global)
   console.log(`[process.env.foo]:`, process.env.foo)
