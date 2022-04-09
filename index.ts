@@ -1,6 +1,13 @@
 import express, { Request, Response } from 'express'
 import { createClient } from 'redis'
 
+const redisClient = createClient({
+  url: process.env.DATABASE_URL
+})
+redisClient.on('error', err => {
+  console.log(`[Redis Error]:`, err)
+})
+
 const app = express()
 
 const port: number = 3008
@@ -8,11 +15,6 @@ const port: number = 3008
 app.get('/', async (req: Request, res: Response) => {
 
   const date = new Date().toISOString()
-
-  const redisClient = createClient()
-  redisClient.on('error', err => {
-    console.log(`[Redis Error]:`, err)
-  })
 
   await redisClient.connect()
 
